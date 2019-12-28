@@ -22,6 +22,8 @@ const plotToComplexScale = complexWidth / horizontalNumberOfPlots;
 const lengthOfComplexAxisInPlot = 2
 const complexScaleinPlot = plotSize / lengthOfComplexAxisInPlot;
 
+ctx.lineWidth = plotSize / 40;
+
 let n, m;
 for (n = 0; n < horizontalNumberOfPlots; n++) {
   for (m = 0; m < verticalNumberOfPlots; m++) {
