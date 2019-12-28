@@ -33,15 +33,21 @@ for (n = 0; n < horizontalNumberOfPlots; n++) {
 
 function plot(n, m) {
   let its = iterations(plotToComplex(n, m, 40));
-  const startPos = complexPlotToCoordinates(n, m, its.shift);
+  let prevPos = complexPlotToCoordinates(n, m, its.shift);
   ctx.beginPath();
-  ctx.strokeStyle = '#333';
-  ctx.moveTo(startPos.x, startPos.y);
-  its.forEach((i) => {
-    const pos = complexPlotToCoordinates(n, m, i);
+  its.forEach((c, i) => {
+    const pos = complexPlotToCoordinates(n, m, c);
+    ctx.beginPath();
+    ctx.moveTo(prevPos.x, prevPos.y);
+    ctx.strokeStyle = colour(i);
     ctx.lineTo(pos.x, pos.y);
+    ctx.stroke();
+    prevPos = pos;
   });
-  ctx.stroke();
+}
+
+function colour(iterationNumber) {
+  return 'rgba(0, ' + (120 - (3 * iterationNumber)) + ', ' + (3 * iterationNumber) + ', 0.5)';
 }
 
 function complexPlotToCoordinates(n, m, c) {
