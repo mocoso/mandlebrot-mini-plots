@@ -50,7 +50,7 @@ function plot(n, m) {
 }
 
 function colour(iterationNumber) {
-  return 'rgba(0, ' + ((colourScale * (maxNumberOfIterations - iterationNumber))) + ', ' + (colourScale * iterationNumber) + ', 0.5)';
+  return 'rgba(0, ' + ((colourScale * iterationNumber) /2) + ', ' + (75 + (colourScale * iterationNumber)) + ', 0.25)';
 }
 
 function complexPlotToCoordinates(n, m, c) {
