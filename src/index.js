@@ -15,12 +15,14 @@ if (urlParams.get('middle')) {
   middle = Complex(-0.5);
 }
 const complexWidth = urlParams.get('width') || 3;
+const maxNumberOfIterations = urlParams.get('maxNumberOfIterations') || 40;
 
 const horizontalNumberOfPlots = Math.floor(canvas.width / plotSize);
 const verticalNumberOfPlots = Math.floor(canvas.height / plotSize);
 const pixelsToComplexScale = complexWidth / canvas.width;
 const lengthOfComplexAxisInPlot = 2;
 const complexScaleinPlot = plotSize / lengthOfComplexAxisInPlot;
+const colourScale = 120 / maxNumberOfIterations;
 
 ctx.lineWidth = plotSize / 40;
 
@@ -32,9 +34,10 @@ for (n = 0; n < horizontalNumberOfPlots; n++) {
 }
 
 function plot(n, m) {
-  let its = iterations(plotToComplex(n, m, 40));
+  let its = iterations(plotToComplex(n, m), maxNumberOfIterations);
   let prevPos = complexPlotToCoordinates(n, m, its.shift);
   ctx.beginPath();
+
   its.forEach((c, i) => {
     const pos = complexPlotToCoordinates(n, m, c);
     ctx.beginPath();
@@ -47,7 +50,7 @@ function plot(n, m) {
 }
 
 function colour(iterationNumber) {
-  return 'rgba(0, ' + (120 - (3 * iterationNumber)) + ', ' + (3 * iterationNumber) + ', 0.5)';
+  return 'rgba(0, ' + ((colourScale * (maxNumberOfIterations - iterationNumber))) + ', ' + (colourScale * iterationNumber) + ', 0.5)';
 }
 
 function complexPlotToCoordinates(n, m, c) {
