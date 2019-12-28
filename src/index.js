@@ -18,8 +18,8 @@ const complexWidth = urlParams.get('width') || 2;
 
 const horizontalNumberOfPlots = Math.floor(1000 / plotSize);
 const verticalNumberOfPlots = Math.floor(500 / plotSize);
-const plotToComplexScale = complexWidth / horizontalNumberOfPlots;
-const lengthOfComplexAxisInPlot = 2
+const pixelsToComplexScale = complexWidth / 1000;
+const lengthOfComplexAxisInPlot = 2;
 const complexScaleinPlot = plotSize / lengthOfComplexAxisInPlot;
 
 ctx.lineWidth = plotSize / 40;
@@ -58,9 +58,13 @@ function complexPlotToCoordinates(n, m, c) {
 }
 
 function plotToCoordinates(n, m) {
- return { x: n * plotSize, y: m * plotSize }
+  return {
+    x: (n * plotSize) + ((m % 2) * plotSize * Math.cos(Math.PI/3)),
+    y: m * plotSize * 2 * Math.cos(Math.PI/3)
+  }
 }
 
 function plotToComplex(n, m) {
-  return topLeft.add(new Complex(n * plotToComplexScale, -(m * plotToComplexScale)));
+  const coords = plotToCoordinates(n, m);
+  return topLeft.add(new Complex(coords.x * pixelsToComplexScale, -(coords.y * pixelsToComplexScale)));
 }
