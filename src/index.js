@@ -1,15 +1,25 @@
 import Complex from 'complex.js';
 import iterations from './mandlebrot-set.js';
 
+const urlParams = new URLSearchParams(window.location.search);
+
 const canvas = document.getElementById('plot');
 const ctx = canvas.getContext('2d');
 
-const plotSize = 20;
+const plotSize = urlParams.get('plotSize') || 20;
+let topLeft;
+if (urlParams.get('topLeft')) {
+  console.log(urlParams.get('topLeft'));
+  topLeft = Complex(urlParams.get('topLeft'));
+} else {
+  topLeft = Complex(-2, 0.8);
+}
+const complexWidth = urlParams.get('width') || 2;
+
 const horizontalNumberOfPlots = Math.floor(1000 / plotSize);
 const verticalNumberOfPlots = Math.floor(500 / plotSize);
-const topLeft = Complex(-2, 0.8);
-const plotToComplexScale = 3 / horizontalNumberOfPlots;
-const lengthOfComplexAxisInPlot = 2;
+const plotToComplexScale = complexWidth / horizontalNumberOfPlots;
+const lengthOfComplexAxisInPlot = 2
 const complexScaleinPlot = plotSize / lengthOfComplexAxisInPlot;
 
 let n, m;
