@@ -1,10 +1,32 @@
 <html>
   <head>
     <title>Mandlebrot Mini Plots</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
     <h1>Mandlebrot Mini Plots</h1>
-    <canvas id="plot" width="1000" height="750">This page relies on canvas</canvas>
+    <canvas id="plot" width="900" height="750">This page relies on canvas</canvas>
+    <form>
+      <h2>Settings</h2>
+
+      <p>
+        Centre on (format <em>x</em> + <em>y</em>i):
+        <input type="text" id="middle" name="middle">
+      </p>
+      <p>
+        Width:
+        <input type="text" id="complexWidth" name="complexWidth">
+      </p>
+      <p>
+        Size of grid (pixels):
+        <input type="text" id="plotSize" name="plotSize">
+      </p>
+      <p>
+        Max iterations:
+        <input type="text" id="maxNumberOfIterations" name="maxNumberOfIterations">
+      </p>
+      <input type="submit" value="Go!">
+    </form>
     <script type="module" src="bundle.js"></script>
   </body>
 </html>

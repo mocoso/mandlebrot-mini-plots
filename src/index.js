@@ -14,8 +14,17 @@ if (urlParams.get('middle')) {
 } else {
   middle = Complex(-0.5);
 }
-const complexWidth = urlParams.get('width') || 3;
+const complexWidth = urlParams.get('complexWidth') || 3;
 const maxNumberOfIterations = urlParams.get('maxNumberOfIterations') || 40;
+
+function setFormField(name, value) {
+  document.getElementById(name).setAttribute('value', value);
+}
+setFormField('middle', middle);
+setFormField('complexWidth', complexWidth);
+setFormField('plotSize', plotSize);
+setFormField('maxNumberOfIterations', maxNumberOfIterations);
+
 
 const horizontalNumberOfPlots = Math.floor(canvas.width / plotSize);
 const verticalNumberOfPlots = Math.floor(canvas.height / plotSize);
