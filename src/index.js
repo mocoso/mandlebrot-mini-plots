@@ -7,18 +7,18 @@ const canvas = document.getElementById('plot');
 const ctx = canvas.getContext('2d');
 
 const plotSize = urlParams.get('plotSize') || 20;
-let topLeft;
-if (urlParams.get('topLeft')) {
-  console.log(urlParams.get('topLeft'));
-  topLeft = Complex(urlParams.get('topLeft'));
+let middle;
+if (urlParams.get('middle')) {
+  console.log(urlParams.get('middle'));
+  middle = Complex(urlParams.get('middle'));
 } else {
-  topLeft = Complex(-2, 0.8);
+  middle = Complex(-0.5);
 }
-const complexWidth = urlParams.get('width') || 2;
+const complexWidth = urlParams.get('width') || 3;
 
-const horizontalNumberOfPlots = Math.floor(1000 / plotSize);
-const verticalNumberOfPlots = Math.floor(500 / plotSize);
-const pixelsToComplexScale = complexWidth / 1000;
+const horizontalNumberOfPlots = Math.floor(canvas.width / plotSize);
+const verticalNumberOfPlots = Math.floor(canvas.height / plotSize);
+const pixelsToComplexScale = complexWidth / canvas.width;
 const lengthOfComplexAxisInPlot = 2;
 const complexScaleinPlot = plotSize / lengthOfComplexAxisInPlot;
 
@@ -66,5 +66,5 @@ function plotToCoordinates(n, m) {
 
 function plotToComplex(n, m) {
   const coords = plotToCoordinates(n, m);
-  return topLeft.add(new Complex(coords.x * pixelsToComplexScale, -(coords.y * pixelsToComplexScale)));
+  return middle.add(new Complex((coords.x - canvas.width / 2) * pixelsToComplexScale, -((coords.y - canvas.height / 2) * pixelsToComplexScale)));
 }
