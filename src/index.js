@@ -1,4 +1,5 @@
 import Complex from 'complex.js';
+import iterations from './mandlebrot-set.js';
 
 const canvas = document.getElementById('plot');
 const ctx = canvas.getContext('2d');
@@ -19,7 +20,7 @@ for (n = 0; n < horizontalNumberOfPlots; n++) {
 }
 
 function plot(n, m) {
-  let its = iterations(plotToComplex(n, m));
+  let its = iterations(plotToComplex(n, m, 40));
   const startPos = complexPlotToCoordinates(n, m, its.shift);
   ctx.beginPath();
   ctx.strokeStyle = '#333';
@@ -44,18 +45,4 @@ function plotToCoordinates(n, m) {
 
 function plotToComplex(n, m) {
   return topLeft.add(new Complex(n * plotToComplexScale, -(m * plotToComplexScale)));
-}
-
-function iterations(c) {
-  let i = 0
-  let z = Complex.ZERO;
-  let iterations = [];
-
-  while (i < 40 && ((Math.pow(z.re, 2) + Math.pow(z.im, 2)) < 4)) {
-    i++;
-    iterations.push(z);
-    z = z.pow(2).add(c);
-  }
-
-  return iterations;
 }
