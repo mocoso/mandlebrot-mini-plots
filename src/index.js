@@ -1,5 +1,6 @@
 import Complex from 'complex.js';
 import C2S from 'canvas2svg';
+import { saveAs } from 'file-saver';
 import iterations from './mandlebrot-set.js';
 import html from '../index.html';
 import css from '../style.css';
@@ -44,6 +45,7 @@ for (n = 0; n < horizontalNumberOfPlots; n++) {
 }
 
 document.getElementById('plot').appendChild(ctx.getSvg());
+document.getElementById('download-svg').onclick = function() { saveFile(ctx); return false; }
 
 
 function plot(n, m) {
@@ -83,4 +85,12 @@ function plotToCoordinates(n, m) {
 function plotToComplex(n, m) {
   const coords = plotToCoordinates(n, m);
   return middle.add(new Complex((coords.x - ctx.width / 2) * pixelsToComplexScale, -((coords.y - ctx.height / 2) * pixelsToComplexScale)));
+}
+
+function saveFile(ctx) {
+  const blob = new Blob(
+    [ctx.getSerializedSvg()],
+    { type: "text/plain;charset=utf-8" }
+  );
+  saveAs(blob, 'mandlebrot-plot.svg');
 }
