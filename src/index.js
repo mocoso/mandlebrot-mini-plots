@@ -46,7 +46,7 @@ for (n = 0; n < horizontalNumberOfPlots; n++) {
 
 function plot(n, m) {
   let its = iterations(plotToComplex(n, m), maxNumberOfIterations);
-  let prevPos = complexPlotToCoordinates(n, m, its.shift);
+  let prevPos = complexPlotToCoordinates(n, m, its.shift());
   ctx.beginPath();
 
   its.forEach((c, i) => {
