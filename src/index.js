@@ -1,5 +1,7 @@
 import Complex from 'complex.js';
 import iterations from './mandlebrot-set.js';
+import html from '../index.html';
+import css from '../style.css';
 
 const urlParams = new URLSearchParams(window.location.search);
 
