@@ -31,7 +31,7 @@ const verticalNumberOfPlots = Math.floor(canvas.height / plotSize);
 const pixelsToComplexScale = complexWidth / canvas.width;
 const lengthOfComplexAxisInPlot = 2;
 const complexScaleinPlot = plotSize / lengthOfComplexAxisInPlot;
-const colourScale = 120 / maxNumberOfIterations;
+const colourScale = 200 / maxNumberOfIterations;
 
 ctx.lineWidth = plotSize / 40;
 
@@ -59,7 +59,7 @@ function plot(n, m) {
 }
 
 function colour(iterationNumber) {
-  return 'rgba(0, ' + ((colourScale * iterationNumber) /2) + ', ' + (75 + (colourScale * iterationNumber)) + ', 0.25)';
+  return 'rgba(' + ((colourScale * iterationNumber)) + ', ' + ((colourScale * iterationNumber) /2) + ', ' + (75 + (colourScale * iterationNumber)) + ', 0.25)';
 }
 
 function complexPlotToCoordinates(n, m, c) {
