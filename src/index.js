@@ -1,12 +1,10 @@
 import Complex from 'complex.js';
+import C2S from 'canvas2svg';
 import iterations from './mandlebrot-set.js';
 import html from '../index.html';
 import css from '../style.css';
 
 const urlParams = new URLSearchParams(window.location.search);
-
-const canvas = document.getElementById('plot');
-const ctx = canvas.getContext('2d');
 
 const plotSize = urlParams.get('plotSize') || 20;
 let middle;
@@ -27,10 +25,11 @@ setFormField('complexWidth', complexWidth);
 setFormField('plotSize', plotSize);
 setFormField('maxNumberOfIterations', maxNumberOfIterations);
 
+const ctx = new C2S(900, 750);
 
-const horizontalNumberOfPlots = Math.floor(canvas.width / plotSize);
-const verticalNumberOfPlots = Math.floor(canvas.height / plotSize);
-const pixelsToComplexScale = complexWidth / canvas.width;
+const horizontalNumberOfPlots = Math.floor(ctx.width / plotSize);
+const verticalNumberOfPlots = Math.floor(ctx.height / plotSize);
+const pixelsToComplexScale = complexWidth / ctx.width;
 const lengthOfComplexAxisInPlot = 2;
 const complexScaleinPlot = plotSize / lengthOfComplexAxisInPlot;
 const colourScale = 200 / maxNumberOfIterations;
@@ -43,6 +42,9 @@ for (n = 0; n < horizontalNumberOfPlots; n++) {
     plot(n, m);
   }
 }
+
+document.getElementById('plot').appendChild(ctx.getSvg());
+
 
 function plot(n, m) {
   let its = iterations(plotToComplex(n, m), maxNumberOfIterations);
@@ -80,5 +82,5 @@ function plotToCoordinates(n, m) {
 
 function plotToComplex(n, m) {
   const coords = plotToCoordinates(n, m);
-  return middle.add(new Complex((coords.x - canvas.width / 2) * pixelsToComplexScale, -((coords.y - canvas.height / 2) * pixelsToComplexScale)));
+  return middle.add(new Complex((coords.x - ctx.width / 2) * pixelsToComplexScale, -((coords.y - ctx.height / 2) * pixelsToComplexScale)));
 }
