@@ -7,7 +7,7 @@ import css from '../style.css';
 
 const urlParams = new URLSearchParams(window.location.search);
 
-const plotSize = urlParams.get('plotSize') || 20;
+const plotSize = urlParams.get('plotSize') || 30;
 let middle;
 if (urlParams.get('middle')) {
   console.log(urlParams.get('middle'));
@@ -31,8 +31,6 @@ const ctx = new C2S(900, 750);
 const horizontalNumberOfPlots = Math.floor(ctx.width / plotSize);
 const verticalNumberOfPlots = Math.floor(ctx.height / plotSize);
 const pixelsToComplexScale = complexWidth / ctx.width;
-const lengthOfComplexAxisInPlot = 2;
-const complexScaleinPlot = plotSize / lengthOfComplexAxisInPlot;
 const colourScale = 200 / maxNumberOfIterations;
 
 ctx.lineWidth = plotSize / 40;
@@ -50,11 +48,12 @@ document.getElementById('download-svg').onclick = function() { saveFile(ctx); re
 
 function plot(n, m) {
   let its = iterations(plotToComplex(n, m), maxNumberOfIterations);
-  let prevPos = complexPlotToCoordinates(n, m, its.shift());
+  const scale = scaleForIterations(its);
+  let prevPos = complexPlotToCoordinates(n, m, its.shift(), scale);
   ctx.beginPath();
 
   its.forEach((c, i) => {
-    const pos = complexPlotToCoordinates(n, m, c);
+    const pos = complexPlotToCoordinates(n, m, c, scale);
     ctx.beginPath();
     ctx.moveTo(prevPos.x, prevPos.y);
     ctx.strokeStyle = colour(i);
@@ -64,15 +63,20 @@ function plot(n, m) {
   });
 }
 
+function scaleForIterations(iterations) {
+  const max = Math.max(...iterations.map( c => Math.max(Math.abs(c.re), Math.abs(c.im)) ));
+  return plotSize / (max * 2);
+}
+
 function colour(iterationNumber) {
   return 'rgb(' + ((colourScale * iterationNumber)) + ', ' + ((colourScale * iterationNumber) /2) + ', ' + (75 + (colourScale * iterationNumber)) + ')';
 }
 
-function complexPlotToCoordinates(n, m, c) {
+function complexPlotToCoordinates(n, m, c, scale) {
   const topLeftOfPlot = plotToCoordinates(n, m);
   const middle = { x: topLeftOfPlot.x + (plotSize / 2), y: topLeftOfPlot.y + (plotSize / 2) }
 
-  return { x: middle.x + (c.re * complexScaleinPlot), y: middle.y - (c.im * complexScaleinPlot) }
+  return { x: middle.x + (c.re * scale), y: middle.y - (c.im * scale) }
 }
 
 function plotToCoordinates(n, m) {
