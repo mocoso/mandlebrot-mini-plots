@@ -34,6 +34,7 @@ const pixelsToComplexScale = complexWidth / ctx.width;
 const colourScale = 200 / maxNumberOfIterations;
 
 ctx.lineWidth = plotSize / 40;
+ctx.lineCap = 'round';
 
 let n, m;
 for (n = 0; n < horizontalNumberOfPlots; n++) {
