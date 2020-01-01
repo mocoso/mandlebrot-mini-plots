@@ -1,9 +1,10 @@
 div {
  float: left;
+ margin-right: 30px;
 }
 
 form {
-  width: 300px;
+  width: 270px;
   margin-right: 10px;
   float: left;
 }
