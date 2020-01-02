@@ -31,7 +31,6 @@ const ctx = new C2S(900, 750);
 const horizontalNumberOfPlots = Math.floor(ctx.width / plotSize);
 const verticalNumberOfPlots = Math.floor(ctx.height / plotSize);
 const pixelsToComplexScale = complexWidth / ctx.width;
-const colourScale = 200 / maxNumberOfIterations;
 
 ctx.lineWidth = plotSize / 40;
 ctx.lineCap = 'round';
@@ -70,7 +69,12 @@ function scaleForIterations(iterations) {
 }
 
 function colour(iterationNumber) {
-  return 'rgb(' + ((colourScale * iterationNumber)) + ', ' + ((colourScale * iterationNumber) /2) + ', ' + (75 + (colourScale * iterationNumber)) + ')';
+  const frequency = 6.2 / maxNumberOfIterations;
+  const red   = Math.sin(frequency * iterationNumber + 2) * 127 + 128;
+  const green = Math.sin(frequency * iterationNumber + 4) * 127 + 128;
+  const blue  = Math.sin(frequency * iterationNumber + 0) * 127 + 128;
+
+  return 'rgb(' + red + ', ' + green + ', ' + blue + ')';
 }
 
 function complexPlotToCoordinates(n, m, c, scale) {
