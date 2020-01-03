@@ -2,6 +2,7 @@ import Complex from 'complex.js';
 import C2S from 'canvas2svg';
 import { saveAs } from 'file-saver';
 import iterations from './mandlebrot-set.js';
+import { gridDimensions, coordinatesForGridLocation } from './hexagonal-grid.js';
 import html from '../index.html';
 import css from '../style.css';
 
@@ -28,16 +29,15 @@ setFormField('maxNumberOfIterations', maxNumberOfIterations);
 
 const ctx = new C2S(900, 750);
 
-const horizontalNumberOfPlots = Math.floor(ctx.width / plotSize);
-const verticalNumberOfPlots = Math.floor(ctx.height / plotSize);
+const dimensions = gridDimensions(ctx.width, ctx.height, plotSize);
 const pixelsToComplexScale = complexWidth / ctx.width;
 
 ctx.lineWidth = plotSize / 40;
 ctx.lineCap = 'round';
 
 let n, m;
-for (n = 0; n < horizontalNumberOfPlots; n++) {
-  for (m = 0; m < verticalNumberOfPlots; m++) {
+for (n = 0; n < dimensions.horizontal; n++) {
+  for (m = 0; m < dimensions.vertical; m++) {
     plot(n, m);
   }
 }
@@ -78,21 +78,14 @@ function colour(iterationNumber) {
 }
 
 function complexPlotToCoordinates(n, m, c, scale) {
-  const topLeftOfPlot = plotToCoordinates(n, m);
+  const topLeftOfPlot = coordinatesForGridLocation(n, m, plotSize);
   const middle = { x: topLeftOfPlot.x + (plotSize / 2), y: topLeftOfPlot.y + (plotSize / 2) }
 
   return { x: middle.x + (c.re * scale), y: middle.y - (c.im * scale) }
 }
 
-function plotToCoordinates(n, m) {
-  return {
-    x: (n * plotSize) + ((m % 2) * plotSize * Math.cos(Math.PI/3)),
-    y: m * plotSize * 2 * Math.cos(Math.PI/3)
-  }
-}
-
 function plotToComplex(n, m) {
-  const coords = plotToCoordinates(n, m);
+  const coords = coordinatesForGridLocation(n, m, plotSize);
   return middle.add(new Complex((coords.x - ctx.width / 2) * pixelsToComplexScale, -((coords.y - ctx.height / 2) * pixelsToComplexScale)));
 }
 
