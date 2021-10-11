@@ -13,6 +13,6 @@
   "dependencies": {
     "canvas2svg": "^1.0.16",
     "complex.js": "^2.0.15",
-    "file-saver": "^2.0.2"
+    "file-saver": "^2.0.5"
   }
 }
