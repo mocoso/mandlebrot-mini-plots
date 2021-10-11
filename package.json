@@ -2,7 +2,7 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack serve --open"
+    "start": "webpack serve --open --mode development"
   },
   "devDependencies": {
     "file-loader": "^6.2.0",
