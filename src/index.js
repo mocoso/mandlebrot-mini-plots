@@ -1,10 +1,11 @@
-import Complex from 'complex.js';
-import C2S from 'canvas2svg';
-import { saveAs } from 'file-saver';
-import iterations from './mandlebrot-set.js';
-import { gridDimensions, coordinatesForGridLocation } from './hexagonal-grid.js';
-import html from '../index.html';
-import css from '../style.css';
+import Complex from "complex.js";
+import C2S from "canvas2svg";
+import { saveAs } from "file-saver";
+import iterations from "./mandlebrot-set.js";
+import {
+  gridDimensions,
+  coordinatesForGridLocation,
+} from "./hexagonal-grid.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 

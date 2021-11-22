@@ -1,7 +1,12 @@
 {
   "license": "MIT",
-  "scripts": {},
-  "devDependencies": {},
+  "scripts": {
+    "build": "esbuild src/index.js --outfile=public/bundle.js --bundle",
+    "serve": "esbuild src/index.js --outfile=public/bundle.js --servedir=public --bundle"
+  },
+  "devDependencies": {
+    "esbuild": "^0.13.14"
+  },
   "dependencies": {
     "canvas2svg": "^1.0.16",
     "complex.js": "^2.0.15",
